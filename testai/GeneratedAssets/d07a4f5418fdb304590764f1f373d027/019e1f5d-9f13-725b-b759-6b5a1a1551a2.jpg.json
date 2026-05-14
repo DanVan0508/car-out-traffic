@@ -1,0 +1,28 @@
+{
+    "asset": "d07a4f5418fdb304590764f1f373d027",
+    "fileName": "019e1f5d-9f13-725b-b759-6b5a1a1551a2.jpg",
+    "prompt": "Casual game UI banner for title, vibrant yellow and black diagonal stripes, industrial warning style, bold 3D effect, high quality game asset.",
+    "negativePrompt": "",
+    "model": "game-ui-essentials-2",
+    "modelName": "Game UI Essentials 2.0",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelatePixelGridSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0,
+    "dimensions": {
+        "width": 2048,
+        "height": 2048
+    },
+    "spriteSheet": false,
+    "duration": 0.0
+}

@@ -1,0 +1,15 @@
+{
+    "asset": "674cb1567021a2047beb1628cea9fcc3",
+    "fileName": "019e166b-1df7-7d93-9d1b-17cfd2ed6a09.wav",
+    "prompt": "a short celebratory chime for level completion",
+    "negativePrompt": "",
+    "model": "elevenlabs-sound-effects-v2",
+    "modelName": "ElevenLabs Sound Effects V2",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "duration": 2.0,
+    "autoTrim": false,
+    "hasReference": false,
+    "voice": ""
+}

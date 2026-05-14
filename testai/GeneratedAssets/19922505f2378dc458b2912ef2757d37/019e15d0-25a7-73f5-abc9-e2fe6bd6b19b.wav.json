@@ -1,0 +1,15 @@
+{
+    "asset": "19922505f2378dc458b2912ef2757d37",
+    "fileName": "019e15d0-25a7-73f5-abc9-e2fe6bd6b19b.wav",
+    "prompt": "A soft rubber squeak sound, casual game UI, short",
+    "negativePrompt": "",
+    "model": "elevenlabs-sound-effects-v2",
+    "modelName": "ElevenLabs Sound Effects V2",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "duration": 10.0,
+    "autoTrim": false,
+    "hasReference": false,
+    "voice": ""
+}

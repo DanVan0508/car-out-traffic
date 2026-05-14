@@ -1,0 +1,23 @@
+{
+    "asset": "260558d9e9e65d643b1c1e2ab8c31204",
+    "fileName": "019e1617-22e4-78b6-989c-051667ba43fd.fbx",
+    "prompt": "generate model with blue color",
+    "negativePrompt": "",
+    "model": "model3d-tripo-p1",
+    "modelName": "Tripo P1",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "promptImageReferenceGuid": "f87dc7d3702b895449bf0d3d98c4316d",
+    "modelReferenceGuid": "",
+    "multiviewFrontGuid": "",
+    "multiviewBackGuid": "",
+    "multiviewLeftGuid": "",
+    "multiviewRightGuid": "",
+    "multiviewTopGuid": "",
+    "multiviewBottomGuid": "",
+    "multiviewLeftFrontGuid": "",
+    "multiviewRightFrontGuid": "",
+    "faceLimit": 10000
+}

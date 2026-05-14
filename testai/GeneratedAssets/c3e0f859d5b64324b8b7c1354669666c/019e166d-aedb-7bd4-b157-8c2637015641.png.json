@@ -1,0 +1,28 @@
+{
+    "asset": "c3e0f859d5b64324b8b7c1354669666c",
+    "fileName": "019e166d-aedb-7bd4-b157-8c2637015641.png",
+    "prompt": "a stylized urban city skyline background for a mobile game, dark night with glowing neon lights, simple flat vector art style",
+    "negativePrompt": "",
+    "model": "flux-2-dev",
+    "modelName": "Flux 2 (Dev)",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelatePixelGridSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0,
+    "dimensions": {
+        "width": 1024,
+        "height": 2048
+    },
+    "spriteSheet": false,
+    "duration": 0.0
+}

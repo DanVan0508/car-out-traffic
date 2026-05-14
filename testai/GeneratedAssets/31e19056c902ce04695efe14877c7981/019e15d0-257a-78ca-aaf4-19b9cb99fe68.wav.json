@@ -1,0 +1,15 @@
+{
+    "asset": "31e19056c902ce04695efe14877c7981",
+    "fileName": "019e15d0-257a-78ca-aaf4-19b9cb99fe68.wav",
+    "prompt": "A light magic chime sound, level complete, positive, short",
+    "negativePrompt": "",
+    "model": "elevenlabs-sound-effects-v2",
+    "modelName": "ElevenLabs Sound Effects V2",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "duration": 10.0,
+    "autoTrim": false,
+    "hasReference": false,
+    "voice": ""
+}

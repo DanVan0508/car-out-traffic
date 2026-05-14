@@ -1,0 +1,23 @@
+{
+  "asset": "3104bc5882dd577419ee13b99a133b99",
+  "fileName": "019e19f6-9b4f-7707-81af-6b3539f6f6c4.fbx",
+  "prompt": "generate car model",
+  "negativePrompt": "",
+  "model": "model3d-tripo-p1",
+  "modelName": "Tripo P1",
+  "customSeed": -1,
+  "w3CTraceId": "",
+  "feedback": 1,
+  "refinementMode": "Generation",
+  "promptImageReferenceGuid": "fdbe84269257a3d47b3baec135ceb5d7",
+  "modelReferenceGuid": "",
+  "multiviewFrontGuid": "",
+  "multiviewBackGuid": "",
+  "multiviewLeftGuid": "",
+  "multiviewRightGuid": "",
+  "multiviewTopGuid": "",
+  "multiviewBottomGuid": "",
+  "multiviewLeftFrontGuid": "",
+  "multiviewRightFrontGuid": "",
+  "faceLimit": -1
+}

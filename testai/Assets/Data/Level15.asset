@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcbd1bde31d789240be6c83ac61cc674, type: 3}
+  m_Name: Level15
+  m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  width: 8
+  height: 8
+  exitGates:
+  - rowOrColumn: 3
+    side: 1
+  - rowOrColumn: 4
+    side: 0
+  cars:
+  - position: {x: 0, y: 3}
+    orientation: 0
+    size: 2
+    isTargetCar: 1
+    targetGateIndex: 0
+  - position: {x: 6, y: 4}
+    orientation: 0
+    size: 2
+    isTargetCar: 1
+    targetGateIndex: 0
+  - position: {x: 0, y: 1}
+    orientation: 1
+    size: 2
+    isTargetCar: 0
+    targetGateIndex: 0
+  - position: {x: 1, y: 5}
+    orientation: 1
+    size: 2
+    isTargetCar: 0
+    targetGateIndex: 0
+  - position: {x: 2, y: 3}
+    orientation: 1
+    size: 2
+    isTargetCar: 0
+    targetGateIndex: 0
+  - position: {x: 2, y: 2}
+    orientation: 0
+    size: 2
+    isTargetCar: 0
+    targetGateIndex: 0
+  - position: {x: 1, y: 0}
+    orientation: 1
+    size: 2
+    isTargetCar: 0
+    targetGateIndex: 0
+  - position: {x: 2, y: 5}
+    orientation: 1
+    size: 2
+    isTargetCar: 0
+    targetGateIndex: 0
+  - position: {x: 3, y: 4}
+    orientation: 1
+    size: 2
+    isTargetCar: 0
+    targetGateIndex: 0
+  - position: {x: 7, y: 1}
+    orientation: 1
+    size: 2
+    isTargetCar: 0
+    targetGateIndex: 0
+  - position: {x: 4, y: 0}
+    orientation: 0
+    size: 2
+    isTargetCar: 0
+    targetGateIndex: 0
+  - position: {x: 4, y: 5}
+    orientation: 0
+    size: 3
+    isTargetCar: 0
+    targetGateIndex: 0
+  - position: {x: 4, y: 1}
+    orientation: 0
+    size: 2
+    isTargetCar: 0
+    targetGateIndex: 0
+  - position: {x: 3, y: 6}
+    orientation: 0
+    size: 3
+    isTargetCar: 0
+    targetGateIndex: 0

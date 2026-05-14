@@ -1,0 +1,15 @@
+{
+    "asset": "8be1986ab0c5abe4bb35fc2ca571e6e6",
+    "fileName": "019e166b-1dff-7461-bff5-c06dcbc87a45.wav",
+    "prompt": "a mechanical sliding sound of a car moving on asphalt",
+    "negativePrompt": "",
+    "model": "elevenlabs-sound-effects-v2",
+    "modelName": "ElevenLabs Sound Effects V2",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "duration": 1.0,
+    "autoTrim": false,
+    "hasReference": false,
+    "voice": ""
+}

@@ -1,0 +1,23 @@
+{
+    "asset": "ea0e8b5216d23fa4f896cc3e3a8bec07",
+    "fileName": "019e24b9-b178-7d88-b00d-d6d66d35db30.fbx",
+    "prompt": "generate a parking slot model",
+    "negativePrompt": "",
+    "model": "model3d-tripo-p1",
+    "modelName": "Tripo P1",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "promptImageReferenceGuid": "ce710792fa5e4d940b2bb46d4f9b7ade",
+    "modelReferenceGuid": "",
+    "multiviewFrontGuid": "",
+    "multiviewBackGuid": "",
+    "multiviewLeftGuid": "",
+    "multiviewRightGuid": "",
+    "multiviewTopGuid": "",
+    "multiviewBottomGuid": "",
+    "multiviewLeftFrontGuid": "",
+    "multiviewRightFrontGuid": "",
+    "faceLimit": -1
+}

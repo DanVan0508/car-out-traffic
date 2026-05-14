@@ -14,12 +14,14 @@ public class GridManager : MonoBehaviour
     public List<GameObject> truckPrefabs;
     public GameObject curbPrefab;
     public GameObject exitGatePrefab;
+    public GameObject parkingSlotPrefab;
     public GameObject winEffectPrefab;
     public AudioClip winSound;
     private AudioSource audioSource;
 
     private List<GameObject> spawnedGates = new List<GameObject>();
     private List<GameObject> spawnedCurbs = new List<GameObject>();
+    private List<GameObject> spawnedSlots = new List<GameObject>();
     private List<GameObject> spawnedCars = new List<GameObject>();
     private CarController[,] grid;
     private int targetsExited = 0;
@@ -83,6 +85,7 @@ public class GridManager : MonoBehaviour
         AdjustCamera(width, height);
         UpdateFloor(width, height);
         SpawnPerimeter(level);
+        SpawnParkingSlots(width, height);
 
         foreach (var info in level.cars)
         {
@@ -138,6 +141,57 @@ public class GridManager : MonoBehaviour
         UpdateGrid();
     }
 
+    private void SpawnParkingSlots(int w, int h)
+    {
+        if (parkingSlotPrefab == null) return;
+        
+        GameObject container = new GameObject("ParkingSlotsContainer");
+        spawnedSlots.Add(container);
+        container.transform.position = gridOffset + new Vector3(0, -0.02f, 0);
+
+        // Instantiate a temporary object to calibrate scaling and offset
+        GameObject temp = Instantiate(parkingSlotPrefab, Vector3.zero, Quaternion.Euler(-90, 0, 0));
+        Renderer r = temp.GetComponentInChildren<Renderer>();
+        if (r == null) {
+            DestroyImmediate(temp);
+            return;
+        }
+
+        // We want the bounds to be exactly 1x1 in world XZ
+        Vector3 initialSize = r.bounds.size;
+        float targetScaleX = 1.0f / initialSize.x;
+        float targetScaleZ = 1.0f / initialSize.z;
+        
+        // Apply the scale to the temp object to check the offset
+        temp.transform.localScale = new Vector3(temp.transform.localScale.x * targetScaleX, temp.transform.localScale.y * targetScaleZ, temp.transform.localScale.z);
+        
+        // After scaling, find the offset needed to put the min corner at (0, 0)
+        // Since it's at (0,0,0) world, its bounds.min is its offset from pivot
+        Vector3 offsetToMin = r.bounds.min;
+        DestroyImmediate(temp);
+
+        for (int x = 0; x < w; x++)
+        {
+            for (int z = 0; z < h; z++)
+            {
+                GameObject slot = Instantiate(parkingSlotPrefab, Vector3.zero, Quaternion.Euler(-90, 0, 0));
+                slot.transform.SetParent(container.transform);
+                
+                // Set scale first
+                slot.transform.localScale = new Vector3(slot.transform.localScale.x * targetScaleX, slot.transform.localScale.y * targetScaleZ, slot.transform.localScale.z);
+                
+                // Position so that the corner is at (x, z)
+                // WorldPos = PivotPos + OffsetToMin -> PivotPos = WorldPos - OffsetToMin
+                // We want WorldPos (min) to be (x, 0.01, z)
+                Vector3 targetPivotPos = new Vector3(x, 0.01f, z) - new Vector3(offsetToMin.x, 0, offsetToMin.z);
+                
+                slot.transform.localPosition = targetPivotPos;
+                slot.name = $"ParkingSlot_{x}_{z}";
+                spawnedSlots.Add(slot);
+            }
+        }
+    }
+
     private void Cleanup()
     {
         if (spawnedCars != null) {
@@ -152,6 +206,10 @@ public class GridManager : MonoBehaviour
             foreach (var go in spawnedCurbs) if (go) { if (Application.isPlaying) Destroy(go); else DestroyImmediate(go); }
             spawnedCurbs.Clear();
         }
+        if (spawnedSlots != null) {
+            foreach (var go in spawnedSlots) if (go) { if (Application.isPlaying) Destroy(go); else DestroyImmediate(go); }
+            spawnedSlots.Clear();
+        }
 
         CarController[] legacyCars = Object.FindObjectsByType<CarController>(FindObjectsInactive.Include);
         foreach (var c in legacyCars) if (c && c.gameObject) { if (Application.isPlaying) Destroy(c.gameObject); else DestroyImmediate(c.gameObject); }
@@ -161,7 +219,7 @@ public class GridManager : MonoBehaviour
             if (go == null) continue;
             string n = go.name;
             if (n.Contains("Curb") || n.Contains("ExitGate") || n.Contains("ModelPivot") || n.Contains("NewCar") || 
-                n.Contains("VLine") || n.Contains("HLine") || n.Contains("Num_") || n.Contains("Barrier")) {
+                n.Contains("VLine") || n.Contains("HLine") || n.Contains("Num_") || n.Contains("Barrier") || n.Contains("ParkingSlot")) {
                 if (go.name == "CurbContainer" || go.name == "Barrier") continue;
                 if (Application.isPlaying) Destroy(go); else DestroyImmediate(go);
             }

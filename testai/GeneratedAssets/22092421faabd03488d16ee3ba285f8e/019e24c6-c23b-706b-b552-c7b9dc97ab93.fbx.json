@@ -1,0 +1,23 @@
+{
+    "asset": "22092421faabd03488d16ee3ba285f8e",
+    "fileName": "019e24c6-c23b-706b-b552-c7b9dc97ab93.fbx",
+    "prompt": "",
+    "negativePrompt": "",
+    "model": "model3d-hunyuan-3d-pro-3-1",
+    "modelName": "Hunyuan 3D 3.1 Pro",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "promptImageReferenceGuid": "957acd60dc358034981749060eeea98d",
+    "modelReferenceGuid": "",
+    "multiviewFrontGuid": "",
+    "multiviewBackGuid": "",
+    "multiviewLeftGuid": "",
+    "multiviewRightGuid": "",
+    "multiviewTopGuid": "",
+    "multiviewBottomGuid": "",
+    "multiviewLeftFrontGuid": "",
+    "multiviewRightFrontGuid": "",
+    "faceLimit": -1
+}

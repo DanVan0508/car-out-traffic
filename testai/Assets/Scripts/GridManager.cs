@@ -13,6 +13,7 @@ public class GridManager : MonoBehaviour
     public GameObject targetCarPrefab;
     public List<GameObject> truckPrefabs;
     public GameObject curbPrefab;
+    public GameObject curbCornerPrefab;
     public GameObject exitGatePrefab;
     public GameObject parkingSlotPrefab;
     public GameObject winEffectPrefab;
@@ -246,7 +247,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    private void SpawnPerimeter(LevelData level)
+        private void SpawnPerimeter(LevelData level)
     {
         if (level.exitGates != null && level.exitGates.Count > 0)
         {
@@ -259,68 +260,87 @@ public class GridManager : MonoBehaviour
 
         if (curbPrefab == null) return;
         
-        float thickness = 0.25f;
-        float hScale = 0.5f; 
+        float thickness = 0.46f;
+        float hScale = 0.46f; 
         float outerOffset = thickness * 0.5f;
+        float padding = 0.06f; // Adjusted to 0.06 units
 
-        // Horizontal: X=-90, Z=90
+        float brickLengthX = (width + 2 * outerOffset) / (float)width - padding;
+        float brickLengthZ = (height + 2 * outerOffset) / (float)height - padding;
+
         for (int x = 0; x < width; x++) {
-            if (!HasGate(LevelData.Side.Bottom, x)) SpawnCurb(new Vector3(x + gridOffset.x + 0.5f, 0, -outerOffset + gridOffset.z), new Vector3(-90, 0, 90), thickness, hScale, 1.0f);
-            if (!HasGate(LevelData.Side.Top, x)) SpawnCurb(new Vector3(x + gridOffset.x + 0.5f, 0, level.height + outerOffset + gridOffset.z), new Vector3(-90, 0, 90), thickness, hScale, 1.0f);
+            if (!HasGate(LevelData.Side.Bottom, x)) SpawnCurb(curbPrefab, new Vector3(x + gridOffset.x + 0.5f, 0, -outerOffset + gridOffset.z), new Vector3(90, 90, 0), thickness, hScale, brickLengthX);
+            if (!HasGate(LevelData.Side.Top, x)) SpawnCurb(curbPrefab, new Vector3(x + gridOffset.x + 0.5f, 0, level.height + outerOffset + gridOffset.z), new Vector3(90, 90, 0), thickness, hScale, brickLengthX);
         }
-        // Vertical: X=-90, Z=0 (Rotate Horizontal by 90 on Y)
         for (int z = 0; z < height; z++) {
-            if (!HasGate(LevelData.Side.Left, z)) SpawnCurb(new Vector3(-outerOffset + gridOffset.x, 0, z + gridOffset.z + 0.5f), new Vector3(-90, 0, 0), thickness, hScale, 1.0f);
-            if (!HasGate(LevelData.Side.Right, z)) SpawnCurb(new Vector3(width + outerOffset + gridOffset.x, 0, z + gridOffset.z + 0.5f), new Vector3(-90, 0, 0), thickness, hScale, 1.0f);
+            if (!HasGate(LevelData.Side.Left, z)) SpawnCurb(curbPrefab, new Vector3(-outerOffset + gridOffset.x, 0, z + gridOffset.z + 0.5f), new Vector3(90, 0, 0), thickness, hScale, brickLengthZ);
+            if (!HasGate(LevelData.Side.Right, z)) SpawnCurb(curbPrefab, new Vector3(width + outerOffset + gridOffset.x, 0, z + gridOffset.z + 0.5f), new Vector3(90, 0, 0), thickness, hScale, brickLengthZ);
         }
         
-        // Corners
-        SpawnCurb(new Vector3(-outerOffset + gridOffset.x, 0, -outerOffset + gridOffset.z), new Vector3(-90, 0, 90), thickness, hScale, thickness);
-        SpawnCurb(new Vector3(width + outerOffset + gridOffset.x, 0, -outerOffset + gridOffset.z), new Vector3(-90, 0, 90), thickness, hScale, thickness);
-        SpawnCurb(new Vector3(-outerOffset + gridOffset.x, 0, level.height + outerOffset + gridOffset.z), new Vector3(-90, 0, 90), thickness, hScale, thickness);
-        SpawnCurb(new Vector3(width + outerOffset + gridOffset.x, 0, level.height + outerOffset + gridOffset.z), new Vector3(-90, 0, 90), thickness, hScale, thickness);
-    }
+        GameObject cp = curbCornerPrefab != null ? curbCornerPrefab : curbPrefab;
+        float cornerPadding = padding * 0.5f;
+        // Bottom-Left
+        SpawnCurb(cp, new Vector3(-outerOffset + gridOffset.x, 0, -outerOffset + gridOffset.z), new Vector3(90, 0, 0), thickness - padding, hScale, thickness - padding);
+        // Bottom-Right
+        SpawnCurb(cp, new Vector3(width + outerOffset + gridOffset.x, 0, -outerOffset + gridOffset.z), new Vector3(90, 270, 0), thickness - padding, hScale, thickness - padding);
+        // Top-Left
+        SpawnCurb(cp, new Vector3(-outerOffset + gridOffset.x, 0, level.height + outerOffset + gridOffset.z), new Vector3(90, 90, 0), thickness - padding, hScale, thickness - padding);
+        // Top-Right
+        SpawnCurb(cp, new Vector3(width + outerOffset + gridOffset.x, 0, level.height + outerOffset + gridOffset.z), new Vector3(90, 180, 0), thickness - padding, hScale, thickness - padding);
+        }
 
-    private bool HasGate(LevelData.Side side, int idx) {
+        private bool HasGate(LevelData.Side side, int idx) {
         LevelData level = levels[currentLevelIndex];
         if (level.exitGates == null || level.exitGates.Count == 0) return side == LevelData.Side.Right && idx == 2;
         foreach (var g in level.exitGates) if (g.side == side && g.rowOrColumn == idx) return true;
         return false;
-    }
+        }
 
-    private void SpawnCurb(Vector3 pos, Vector3 euler, float thickness, float hScale, float length) {
-        GameObject c = Instantiate(curbPrefab, pos, Quaternion.identity);
+            private void SpawnCurb(GameObject prefab, Vector3 pos, Vector3 euler, float thickness, float hScale, float length) {
+        if (prefab == null) return;
+        GameObject c = Object.Instantiate(prefab, pos, Quaternion.identity);
         c.transform.localEulerAngles = euler;
+        c.transform.localScale = Vector3.one;
         
-        // Correct scaling for requested rotations:
-        // For (-90, 0, 90): Local X is thickness (0.13 base), Local Y is length (1.0 base), Local Z is height (0.56 base)
-        // For (-90, 0, 0): Local X is length (1.0 base), Local Y is thickness (0.13 base), Local Z is height (0.56 base)
-        
-        float scaleX, scaleY, scaleZ;
-        if (Mathf.Abs(euler.z - 90) < 1f) {
-            scaleX = (thickness / 0.13f) * 100f;
-            scaleY = (length / 1.0f) * 100f;
-            scaleZ = (hScale / 0.56f) * 100f;
-        } else {
-            scaleX = (length / 1.0f) * 100f;
-            scaleY = (thickness / 0.13f) * 100f;
-            scaleZ = (hScale / 0.56f) * 100f;
+        Renderer r = c.GetComponentInChildren<Renderer>();
+        if (r != null) {
+            Vector3 naturalSize = r.bounds.size;
+            bool isHorizontal = Mathf.Abs(euler.y - 90) < 1f || Mathf.Abs(euler.y - 270) < 1f;
+            float targetWX = isHorizontal ? length : thickness;
+            float targetWZ = isHorizontal ? thickness : length;
+            float targetWY = hScale;
+
+            Vector3 s = Vector3.one;
+            Vector3 lX = c.transform.TransformDirection(Vector3.right);
+            Vector3 lY = c.transform.TransformDirection(Vector3.up);
+            Vector3 lZ = c.transform.TransformDirection(Vector3.forward);
+
+            if (Mathf.Abs(lX.x) > 0.5f) s.x = naturalSize.x > 0 ? targetWX / naturalSize.x : 1f;
+            else if (Mathf.Abs(lX.y) > 0.5f) s.x = naturalSize.y > 0 ? targetWY / naturalSize.y : 1f;
+            else if (Mathf.Abs(lX.z) > 0.5f) s.x = naturalSize.z > 0 ? targetWZ / naturalSize.z : 1f;
+
+            if (Mathf.Abs(lY.x) > 0.5f) s.y = naturalSize.x > 0 ? targetWX / naturalSize.x : 1f;
+            else if (Mathf.Abs(lY.y) > 0.5f) s.y = naturalSize.y > 0 ? targetWY / naturalSize.y : 1f;
+            else if (Mathf.Abs(lY.z) > 0.5f) s.y = naturalSize.z > 0 ? targetWZ / naturalSize.z : 1f;
+
+            if (Mathf.Abs(lZ.x) > 0.5f) s.z = naturalSize.x > 0 ? targetWX / naturalSize.x : 1f;
+            else if (Mathf.Abs(lZ.y) > 0.5f) s.z = naturalSize.y > 0 ? targetWY / naturalSize.y : 1f;
+            else if (Mathf.Abs(lZ.z) > 0.5f) s.z = naturalSize.z > 0 ? targetWZ / naturalSize.z : 1f;
+
+            c.transform.localScale = s;
         }
         
-        c.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
-        
-        // Precise Grounding
         Renderer[] rs = c.GetComponentsInChildren<Renderer>();
         if (rs.Length > 0) {
             Bounds b = rs[0].bounds;
-            foreach (var r in rs) b.Encapsulate(r.bounds);
+            foreach (var renderer in rs) b.Encapsulate(renderer.bounds);
             float offset = -b.min.y;
-            c.transform.position += new Vector3(0, offset, 0);
+            c.transform.position += Vector3.zero;
         }
         spawnedCurbs.Add(c);
     }
 
-    private void CreateExitGate(LevelData.ExitGate gate)
+        private void CreateExitGate(LevelData.ExitGate gate)
     {
         Vector3 pos = Vector3.zero;
         Quaternion rot = Quaternion.identity;

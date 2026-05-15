@@ -35,8 +35,11 @@ private List<GameObject> spawnedSlots = new List<GameObject>();
 
     void Awake()
     {
+        Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 0;
+
         audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.playOnAwake = false;
+audioSource.playOnAwake = false;
         grid = new CarController[width, height];
         currentLevelIndex = PlayerPrefs.GetInt(LEVEL_KEY, 0);
         if (levels != null && levels.Count > 0)

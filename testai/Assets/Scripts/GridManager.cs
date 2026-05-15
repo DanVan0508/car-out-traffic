@@ -16,13 +16,15 @@ public class GridManager : MonoBehaviour
     public GameObject curbCornerPrefab;
     public GameObject exitGatePrefab;
     public GameObject parkingSlotPrefab;
+    public List<GameObject> environmentPrefabs;
     public GameObject winEffectPrefab;
-    public AudioClip winSound;
+public AudioClip winSound;
     private AudioSource audioSource;
 
+    private GameObject spawnedEnvironment;
     private List<GameObject> spawnedGates = new List<GameObject>();
     private List<GameObject> spawnedCurbs = new List<GameObject>();
-    private List<GameObject> spawnedSlots = new List<GameObject>();
+private List<GameObject> spawnedSlots = new List<GameObject>();
     private List<GameObject> spawnedCars = new List<GameObject>();
     private CarController[,] grid;
     private int targetsExited = 0;
@@ -85,6 +87,7 @@ public class GridManager : MonoBehaviour
 
         AdjustCamera(width, height);
         UpdateFloor(width, height);
+        SpawnEnvironment(width, height);
         SpawnPerimeter(level);
         SpawnParkingSlots(width, height);
 
@@ -193,10 +196,42 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    private void SpawnEnvironment(int w, int h)
+    {
+        if (spawnedEnvironment != null)
+        {
+            if (Application.isPlaying) Destroy(spawnedEnvironment);
+            else DestroyImmediate(spawnedEnvironment);
+        }
+
+        if (environmentPrefabs == null || environmentPrefabs.Count == 0) return;
+
+        // Logic: 6x6 -> 1, 8x8 -> 2, 10x10 -> 3
+        int index = (w - 6) / 2;
+        if (index < 0) index = 0;
+        if (index >= environmentPrefabs.Count) index = environmentPrefabs.Count - 1;
+
+        GameObject prefab = environmentPrefabs[index];
+        if (prefab != null)
+        {
+            // Match the location, rotation and scale of the prefab, while respecting gridOffset
+            spawnedEnvironment = Instantiate(prefab, prefab.transform.position + gridOffset, prefab.transform.rotation);
+            spawnedEnvironment.transform.localScale = prefab.transform.localScale;
+            spawnedEnvironment.name = "CityEnvironment";
+        }
+    }
+
     private void Cleanup()
     {
+        if (spawnedEnvironment != null)
+        {
+            if (Application.isPlaying) Destroy(spawnedEnvironment);
+            else DestroyImmediate(spawnedEnvironment);
+            spawnedEnvironment = null;
+        }
+
         if (spawnedCars != null) {
-            foreach (var go in spawnedCars) if (go) { if (Application.isPlaying) Destroy(go); else DestroyImmediate(go); }
+foreach (var go in spawnedCars) if (go) { if (Application.isPlaying) Destroy(go); else DestroyImmediate(go); }
             spawnedCars.Clear();
         }
         if (spawnedGates != null) {
@@ -491,6 +526,14 @@ public class GridManager : MonoBehaviour
             height = levels[currentLevelIndex].height;
         }
         AdjustCamera(width, height);
+    #if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            UnityEditor.EditorApplication.delayCall += () => {
+                if (this != null) SpawnEnvironment(width, height);
+            };
+        }
+    #endif
     }
 
     private void AdjustCamera(int w, int h)

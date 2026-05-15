@@ -1,0 +1,28 @@
+{
+    "asset": "eca98e9f5c6c00048abbe60d713dae74",
+    "fileName": "019e2aab-0772-7870-91eb-7dd48fa869b3.png",
+    "prompt": "Top-down view of a low poly stylized city environment for a 6x6 grid game. Flat center, edges with tiny buildings and trees. Bright, clean colors. Game asset concept.",
+    "negativePrompt": "",
+    "model": "gpt-image-1",
+    "modelName": "GPT Image 1",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelatePixelGridSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0,
+    "dimensions": {
+        "width": 1024,
+        "height": 1024
+    },
+    "spriteSheet": false,
+    "duration": 0.0
+}
